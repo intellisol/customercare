@@ -77,6 +77,8 @@ This document outlines the agents and their responsibilities for the in-house Cu
 | CustomerEmail        | String        | Email address of the customer.                |
 | OrderReference       | String        | Order or delivery reference number.           |
 | ComplaintDescription | Text          | Detailed description of the complaint.        |
+| CustomerName         | String        | Name of the customer company or contact.      |
+| SAPCustomer          | String        | SAP customer identifier (optional).           |
 | ComplaintDateTime    | DateTime      | Timestamp of complaint reception.              |
 | Status               | String        | Ticket status: New, Pending, Closed, etc.     |
 | AssignedTeam         | String        | Internal team or recipient assigned.           |

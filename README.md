@@ -20,7 +20,7 @@ Configuration is handled by `customer_care.config.Config`.  Values can be custom
 
 ## Database
 
-Run the `customer_care/init_db.py` script to create the `tickets` table in your PostgreSQL instance:
+Run the `customer_care/init_db.py` script to create the `tickets` table in your PostgreSQL instance. The table includes optional `customer_name` and `sap_customer` columns for storing customer details when available:
 
 ```bash
 python -m customer_care.init_db
@@ -33,8 +33,8 @@ The SQL used by the script is also provided in `schema.sql` if you prefer runnin
 Install dependencies and run the tests with coverage:
 
 ```bash
-pip install psycopg2-binary pytest pytest-cov
-pytest --cov=customer_care
+pip install -r requirements.txt
+PYTHONPATH=. pytest --cov=customer_care
 ```
 
 The tests cover every module to ensure 100% coverage.

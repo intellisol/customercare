@@ -4,7 +4,7 @@ from customer_care.config import Config
 
 
 def test_format_forward():
-    ticket = TicketData("a@b.c", "123", "issue")
+    ticket = TicketData("a@b.c", "123", "issue", "Nestle", "SAP1")
     msg = format_forward(ticket, 2)
     assert "ticket 2" in msg
     assert "issue" in msg

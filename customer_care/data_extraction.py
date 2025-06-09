@@ -9,11 +9,15 @@ class TicketData:
     customer_email: str
     order_reference: str
     complaint_description: str
+    customer_name: str | None = None
+    sap_customer: str | None = None
 
 
 EMAIL_RE = re.compile(r"Email:\s*(?P<email>.+)")
 ORDER_RE = re.compile(r"Order:\s*(?P<order>.+)")
-COMPLAINT_RE = re.compile(r"Complaint:\s*(?P<complaint>.+)", re.DOTALL)
+COMPLAINT_RE = re.compile(r"Complaint:\s*(?P<complaint>[^\n]+)")
+NAME_RE = re.compile(r"Name:\s*(?P<name>.+)")
+SAP_RE = re.compile(r"SAP Customer:\s*(?P<sap>.+)")
 
 
 def extract(email_text: str) -> TicketData | None:
@@ -21,6 +25,8 @@ def extract(email_text: str) -> TicketData | None:
     email_match = EMAIL_RE.search(email_text)
     order_match = ORDER_RE.search(email_text)
     complaint_match = COMPLAINT_RE.search(email_text)
+    name_match = NAME_RE.search(email_text)
+    sap_match = SAP_RE.search(email_text)
 
     if not (email_match and order_match and complaint_match):
         return None
@@ -29,4 +35,6 @@ def extract(email_text: str) -> TicketData | None:
         customer_email=email_match.group("email").strip(),
         order_reference=order_match.group("order").strip(),
         complaint_description=complaint_match.group("complaint").strip(),
+        customer_name=name_match.group("name").strip() if name_match else None,
+        sap_customer=sap_match.group("sap").strip() if sap_match else None,
     )

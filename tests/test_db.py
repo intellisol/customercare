@@ -17,7 +17,7 @@ def test_insert_ticket():
     conn = mock.MagicMock()
     cur = conn.cursor().__enter__()
     cur.fetchone.return_value = [5]
-    case = db.insert_ticket(conn, "a@b.c", "123", "desc")
+    case = db.insert_ticket(conn, "a@b.c", "123", "desc", "Nestle", "CUST1")
     cur.execute.assert_called()
     conn.commit.assert_called_once()
     assert case == 5

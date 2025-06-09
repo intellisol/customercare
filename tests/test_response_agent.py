@@ -3,7 +3,7 @@ from customer_care.data_extraction import TicketData
 
 
 def test_acknowledgement():
-    ticket = TicketData("a@b.c", "123", "Broken")
+    ticket = TicketData("a@b.c", "123", "Broken", "Nestle", "SAP1")
     msg = acknowledgement(ticket, 1)
     assert "case number is 1" in msg
     assert "a@b.c" in msg

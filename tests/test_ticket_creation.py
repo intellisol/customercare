@@ -6,7 +6,7 @@ from customer_care.config import Config
 
 
 def test_create_ticket_calls_db():
-    ticket = TicketData("a@b.c", "1", "desc")
+    ticket = TicketData("a@b.c", "1", "desc", "Nestle", "SAP1")
     config = Config()
     with mock.patch("customer_care.ticket_creation.db") as db_mock:
         db_mock.get_connection.return_value.__enter__.return_value = "conn"

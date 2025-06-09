@@ -1,7 +1,6 @@
 from unittest import mock
 
 from customer_care import init_db
-from customer_care.config import Config
 
 
 def test_main_calls_create_table():

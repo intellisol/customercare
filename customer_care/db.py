@@ -10,6 +10,8 @@ CREATE_TABLE_QUERY = sql.SQL(
         customer_email TEXT NOT NULL,
         order_reference TEXT NOT NULL,
         complaint_description TEXT NOT NULL,
+        customer_name TEXT,
+        sap_customer TEXT,
         complaint_datetime TIMESTAMP NOT NULL DEFAULT NOW(),
         status TEXT NOT NULL,
         assigned_team TEXT,
@@ -23,9 +25,11 @@ INSERT_TICKET_QUERY = sql.SQL(
         customer_email,
         order_reference,
         complaint_description,
+        customer_name,
+        sap_customer,
         status,
         assigned_team
-    ) VALUES (%s, %s, %s, %s, %s) RETURNING case_number;"""
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING case_number;"""
 )
 
 
@@ -47,12 +51,29 @@ def create_ticket_table(conn):
     conn.commit()
 
 
-def insert_ticket(conn, customer_email, order_reference, complaint_description, status="New", assigned_team=None):
+def insert_ticket(
+    conn,
+    customer_email,
+    order_reference,
+    complaint_description,
+    customer_name=None,
+    sap_customer=None,
+    status="New",
+    assigned_team=None,
+):
     """Insert a ticket into the database and return the generated case number."""
     with conn.cursor() as cur:
         cur.execute(
             INSERT_TICKET_QUERY,
-            (customer_email, order_reference, complaint_description, status, assigned_team),
+            (
+                customer_email,
+                order_reference,
+                complaint_description,
+                customer_name,
+                sap_customer,
+                status,
+                assigned_team,
+            ),
         )
         case_number = cur.fetchone()[0]
     conn.commit()

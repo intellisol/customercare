@@ -12,6 +12,8 @@ def create_ticket(ticket: TicketData, config: Config) -> int:
             ticket.customer_email,
             ticket.order_reference,
             ticket.complaint_description,
+            ticket.customer_name,
+            ticket.sap_customer,
             status="New",
             assigned_team=None,
         )

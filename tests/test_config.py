@@ -1,4 +1,3 @@
-import os
 from importlib import reload
 
 import customer_care.config as cfg

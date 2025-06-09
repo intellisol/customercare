@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS tickets (
     customer_email TEXT NOT NULL,
     order_reference TEXT NOT NULL,
     complaint_description TEXT NOT NULL,
+    customer_name TEXT,
+    sap_customer TEXT,
     complaint_datetime TIMESTAMP NOT NULL DEFAULT NOW(),
     status TEXT NOT NULL,
     assigned_team TEXT,
