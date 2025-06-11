@@ -1,6 +1,12 @@
 
-"""Generate customer responses."""
+"""Generate and send customer responses."""
 
+from __future__ import annotations
+
+import smtplib
+from typing import Any
+
+from .config import Config
 from .data_extraction import TicketData
 
 
@@ -16,27 +22,33 @@ REQ_TEMPLATE = (
 
 
 def acknowledgement(ticket: TicketData, case_number: int) -> str:
+    """Return acknowledgement email body for a ticket."""
     return ACK_TEMPLATE.format(email=ticket.customer_email, case=case_number)
 
 
 def request_more_info(email: str) -> str:
+    """Return body requesting more information from the customer."""
     return REQ_TEMPLATE.format(email=email)
-=======
-"""Response Agent."""
-from __future__ import annotations
 
-from typing import Any
+
+def send_email(recipient: str, body: str, config: Config) -> None:
+    """Send an email using ``smtplib`` based on the provided configuration."""
+    message = f"From: {config.email_user}\nTo: {recipient}\n\n{body}"
+    with smtplib.SMTP("localhost") as smtp:
+        smtp.login(config.email_user, config.email_password)
+        smtp.sendmail(config.email_user, [recipient], message)
 
 
 class ResponseAgent:
+    def __init__(self, config: Config | None = None) -> None:
+        self.config = config or Config()
+
     def request_more_info(self, customer_email: str) -> Any:
         """Send an email requesting missing information."""
-        # Placeholder for sending email
-        print(f"Requesting more info from {customer_email}")
+        body = REQ_TEMPLATE.format(email=customer_email)
+        send_email(customer_email, body, self.config)
 
     def send_acknowledgement(self, customer_email: str, case_number: str) -> Any:
         """Send acknowledgement email with case number."""
-        # Placeholder for sending email
-        print(
-            f"Acknowledgement sent to {customer_email} for case {case_number}"
-        )
+        body = ACK_TEMPLATE.format(email=customer_email, case=case_number)
+        send_email(customer_email, body, self.config)
