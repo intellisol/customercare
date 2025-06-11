@@ -38,7 +38,7 @@ pytest --cov=customer_care
 ```
 
 The tests cover every module to ensure 100% coverage.
-=======
+
 This repository contains a simple demonstration of an automated customer complaint management workflow. The workflow is composed of modular agents as described in `agents.md`.
 
 ## Running the Example
